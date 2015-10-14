@@ -7,6 +7,7 @@
 #include <map>
 
 #include "atom/common/native_mate_converters/callback.h"
+#include "atom/common/native_mate_converters/download_item_converter.h"
 #include "atom/common/native_mate_converters/file_path_converter.h"
 #include "atom/common/native_mate_converters/gurl_converter.h"
 #include "atom/common/node_includes.h"
@@ -14,32 +15,6 @@
 #include "base/strings/utf_string_conversions.h"
 #include "native_mate/dictionary.h"
 #include "net/base/filename_util.h"
-
-namespace mate {
-
-template<>
-struct Converter<content::DownloadItem::DownloadState> {
-  static v8::Local<v8::Value> ToV8(v8::Isolate* isolate,
-                                   content::DownloadItem::DownloadState state) {
-    std::string download_state;
-    switch (state) {
-      case content::DownloadItem::COMPLETE:
-        download_state = "completed";
-        break;
-      case content::DownloadItem::CANCELLED:
-        download_state = "cancelled";
-        break;
-      case content::DownloadItem::INTERRUPTED:
-        download_state = "interrupted";
-        break;
-      default:
-        break;
-    }
-    return ConvertToV8(isolate, download_state);
-  }
-};
-
-}  // namespace mate
 
 namespace atom {
 

@@ -23,7 +23,8 @@ namespace atom {
 
 AtomDownloadManagerDelegate::AtomDownloadManagerDelegate(
     content::DownloadManager* manager)
-    : download_manager_(manager),
+    : next_id_(content::DownloadItem::kInvalidId + 1),
+      download_manager_(manager),
       weak_ptr_factory_(this) {}
 
 AtomDownloadManagerDelegate::~AtomDownloadManagerDelegate() {
@@ -157,8 +158,11 @@ bool AtomDownloadManagerDelegate::ShouldOpenDownload(
 
 void AtomDownloadManagerDelegate::GetNextId(
     const content::DownloadIdCallback& callback) {
-  static uint32 next_id = content::DownloadItem::kInvalidId + 1;
-  callback.Run(next_id++);
+  callback.Run(next_id_++);
+}
+
+uint32 AtomDownloadManagerDelegate::NextId() {
+  return next_id_;
 }
 
 }  // namespace atom

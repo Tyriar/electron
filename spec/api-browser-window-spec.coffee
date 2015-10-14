@@ -301,3 +301,15 @@ describe 'browser-window module', ->
         assert.notEqual data.length, 0
         w.webContents.endFrameSubscription()
         done()
+
+  describe 'save page', ->
+    savePagePath = path.join fixtures, 'save_page.html'
+    it 'should save page', (done) ->
+      w.webContents.on 'did-finish-load', ->
+        w.webContents.savePage savePagePath, 'HTMLComplete', (state) ->
+          assert.equal state, 'completed'
+          assert fs.existsSync savePagePath
+          fs.unlinkSync savePagePath
+          done()
+
+      w.loadUrl "file://#{fixtures}/api/blank.html"

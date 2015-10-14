@@ -45,7 +45,10 @@ class AtomDownloadManagerDelegate : public content::DownloadManagerDelegate {
       const content::DownloadOpenDelayedCallback& callback) override;
   void GetNextId(const content::DownloadIdCallback& callback) override;
 
+  uint32 NextId();
+
  private:
+  uint32 next_id_;
   content::DownloadManager* download_manager_;
   base::WeakPtrFactory<AtomDownloadManagerDelegate> weak_ptr_factory_;
 
